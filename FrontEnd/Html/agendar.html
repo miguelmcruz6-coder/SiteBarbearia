@@ -1,24 +1,44 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="Css/agendar.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="Css/agendar.css" />
     <title>Localização</title>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <img src="" alt="" id="imagemCentralHeader">
-        <ul>
-            <li id="home">Inicio</li>
-            <li id="detalhes">Sobre a Barbearia</li>
-        </ul>
+      <img src="" alt="" id="imagemCentralHeader" />
+      <ul>
+        <li id="home">Inicio</li>
+        <li id="detalhes">Sobre a Barbearia</li>
+      </ul>
     </header>
     <body>
-        <div id="escolherProfissional">
-            <input type="text"placeholder="Escolha seu profissional">
-            
-        </div>
+      <div id="agendamento">
+        <input id="Nome" type="text" placeholder="Nome" />
+        <input id="cpf" type="text" placeholder="CPF" />
+        <input id="telefone" type="tel" placeholder="Telefone" />
+        <input id="email" type="email" placeholder="E-mail" />
+
+        <select id="servico">
+          <option value="">Escolha o serviço</option>
+        </select>
+
+        <select id="barbeiro">
+          <option value="">Escolha o profissional</option>
+        </select>
+
+        <input id="data" type="date" />
+
+        <select id="horario">
+          <option value="">Escolha a data</option>
+        </select>
+
+        <button id="confirmarAgendamento">Confirmar pagamento</button>
+
+        <p id="mensagem"></p>
+      </div>
     </body>
-</body>
+  </body>
 </html>
