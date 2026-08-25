@@ -166,3 +166,4 @@ C:\Users\486584624\Documents\SiteBarbearia\BarbeariaAPI\obj\Debug\net8.0\refint\
 C:\Users\486584624\Documents\SiteBarbearia\BarbeariaAPI\obj\Debug\net8.0\BarbeariaAPI.pdb
 C:\Users\486584624\Documents\SiteBarbearia\BarbeariaAPI\obj\Debug\net8.0\BarbeariaAPI.genruntimeconfig.cache
 C:\Users\486584624\Documents\SiteBarbearia\BarbeariaAPI\obj\Debug\net8.0\ref\BarbeariaAPI.dll
+C:\Users\486584624\Documents\SiteBarbearia\BarbeariaAPI\obj\Debug\net8.0\BarbeariaAPI.sourcelink.json

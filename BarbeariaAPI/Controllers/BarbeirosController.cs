@@ -1,7 +1,8 @@
+using BarbeariaAPI.Data;
+using BarbeariaAPI.DTOs;
+using BarbeariaAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using BarbeariaAPI.Data;
-using BarbeariaAPI.Models;
 
 namespace BarbeariaAPI.Controllers
 {
@@ -31,7 +32,7 @@ namespace BarbeariaAPI.Controllers
 
             if (barbeiro == null)
             {
-                return NotFound();
+                return NotFound("Barbeiro não encontrado.");
             }
 
             return barbeiro;
@@ -39,9 +40,16 @@ namespace BarbeariaAPI.Controllers
 
         // POST: api/barbeiros
         [HttpPost]
-        public async Task<ActionResult<Barbeiro>> PostBarbeiro(Barbeiro barbeiro)
+        public async Task<ActionResult<Barbeiro>> PostBarbeiro(
+            BarbeiroDTO barbeiroDTO)
         {
+            var barbeiro = new Barbeiro
+            {
+                Nome = barbeiroDTO.Nome
+            };
+
             _context.Barbeiros.Add(barbeiro);
+
             await _context.SaveChangesAsync();
 
             return CreatedAtAction(
@@ -55,28 +63,18 @@ namespace BarbeariaAPI.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBarbeiro(
             int id,
-            Barbeiro barbeiro)
+            BarbeiroDTO barbeiroDTO)
         {
-            if (id != barbeiro.Id)
+            var barbeiro = await _context.Barbeiros.FindAsync(id);
+
+            if (barbeiro == null)
             {
-                return BadRequest();
+                return NotFound("Barbeiro não encontrado.");
             }
 
-            _context.Entry(barbeiro).State = EntityState.Modified;
+            barbeiro.Nome = barbeiroDTO.Nome;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!BarbeiroExiste(id))
-                {
-                    return NotFound();
-                }
-
-                throw;
-            }
+            await _context.SaveChangesAsync();
 
             return NoContent();
         }
@@ -89,18 +87,14 @@ namespace BarbeariaAPI.Controllers
 
             if (barbeiro == null)
             {
-                return NotFound();
+                return NotFound("Barbeiro não encontrado.");
             }
 
             _context.Barbeiros.Remove(barbeiro);
+
             await _context.SaveChangesAsync();
 
             return NoContent();
-        }
-
-        private bool BarbeiroExiste(int id)
-        {
-            return _context.Barbeiros.Any(e => e.Id == id);
         }
     }
 }

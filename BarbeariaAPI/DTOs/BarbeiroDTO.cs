@@ -5,11 +5,9 @@ using System.Threading.Tasks;
 
 namespace BarbeariaAPI.DTOs
 {
-    public class ServicoDTO
+    public class BarbeiroDTO
     {
         public string Nome { get; set; } = string.Empty;
-        public string Descricao { get; set; } = string.Empty;
-        public decimal Preco { get; set; }
-        public int DuracaoMinutos { get; set; }
+        public string Especialidade { get; set; } = string.Empty;
     }
 }

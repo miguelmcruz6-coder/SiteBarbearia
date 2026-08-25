@@ -1,7 +1,8 @@
+using BarbeariaAPI.Data;
+using BarbeariaAPI.DTOs;
+using BarbeariaAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using BarbeariaAPI.Data;
-using BarbeariaAPI.Models;
 
 namespace BarbeariaAPI.Controllers
 {
@@ -39,7 +40,7 @@ namespace BarbeariaAPI.Controllers
 
             if (agendamento == null)
             {
-                return NotFound();
+                return NotFound("Agendamento não encontrado.");
             }
 
             return agendamento;
@@ -48,47 +49,61 @@ namespace BarbeariaAPI.Controllers
         // POST: api/agendamentos
         [HttpPost]
         public async Task<ActionResult<Agendamento>> PostAgendamento(
-            Agendamento agendamento)
+            AgendamentoDTO agendamentoDTO)
         {
+            // Verificar cliente
             var clienteExiste = await _context.Clientes
-                .AnyAsync(c => c.Id == agendamento.ClienteId);
+                .AnyAsync(c => c.Id == agendamentoDTO.ClienteId);
 
             if (!clienteExiste)
             {
                 return BadRequest("Cliente não encontrado.");
             }
 
+            // Verificar barbeiro
             var barbeiroExiste = await _context.Barbeiros
-                .AnyAsync(b => b.Id == agendamento.BarbeiroId);
+                .AnyAsync(b => b.Id == agendamentoDTO.BarbeiroId);
 
             if (!barbeiroExiste)
             {
                 return BadRequest("Barbeiro não encontrado.");
             }
 
+            // Verificar serviço
             var servicoExiste = await _context.Servicos
-                .AnyAsync(s => s.Id == agendamento.ServicoId);
+                .AnyAsync(s => s.Id == agendamentoDTO.ServicoId);
 
             if (!servicoExiste)
             {
                 return BadRequest("Serviço não encontrado.");
             }
 
-            // Verifica se o barbeiro já possui agendamento
+            // Verificar se o horário está ocupado
             var horarioOcupado = await _context.Agendamentos
                 .AnyAsync(a =>
-                    a.BarbeiroId == agendamento.BarbeiroId &&
-                    a.Data == agendamento.Data &&
-                    a.Horario == agendamento.Horario &&
+                    a.BarbeiroId == agendamentoDTO.BarbeiroId &&
+                    a.Data == agendamentoDTO.Data &&
+                    a.Horario == agendamentoDTO.Horario &&
                     a.Status != "Cancelado"
                 );
 
             if (horarioOcupado)
             {
-                return Conflict("Este horário já está ocupado.");
+                return Conflict(
+                    "Este barbeiro já possui um agendamento neste horário."
+                );
             }
 
-            agendamento.Status = "Agendado";
+            // Criar agendamento
+            var agendamento = new Agendamento
+            {
+                ClienteId = agendamentoDTO.ClienteId,
+                BarbeiroId = agendamentoDTO.BarbeiroId,
+                ServicoId = agendamentoDTO.ServicoId,
+                Data = agendamentoDTO.Data,
+                Horario = agendamentoDTO.Horario,
+                Status = "Agendado"
+            };
 
             _context.Agendamentos.Add(agendamento);
 
@@ -105,45 +120,65 @@ namespace BarbeariaAPI.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAgendamento(
             int id,
-            Agendamento agendamento)
-        {
-            if (id != agendamento.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(agendamento).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AgendamentoExiste(id))
-                {
-                    return NotFound();
-                }
-
-                throw;
-            }
-
-            return NoContent();
-        }
-
-        // DELETE: api/agendamentos/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAgendamento(int id)
+            AgendamentoDTO agendamentoDTO)
         {
             var agendamento = await _context.Agendamentos
                 .FindAsync(id);
 
             if (agendamento == null)
             {
-                return NotFound();
+                return NotFound("Agendamento não encontrado.");
             }
 
-            _context.Agendamentos.Remove(agendamento);
+            // Verificar cliente
+            var clienteExiste = await _context.Clientes
+                .AnyAsync(c => c.Id == agendamentoDTO.ClienteId);
+
+            if (!clienteExiste)
+            {
+                return BadRequest("Cliente não encontrado.");
+            }
+
+            // Verificar barbeiro
+            var barbeiroExiste = await _context.Barbeiros
+                .AnyAsync(b => b.Id == agendamentoDTO.BarbeiroId);
+
+            if (!barbeiroExiste)
+            {
+                return BadRequest("Barbeiro não encontrado.");
+            }
+
+            // Verificar serviço
+            var servicoExiste = await _context.Servicos
+                .AnyAsync(s => s.Id == agendamentoDTO.ServicoId);
+
+            if (!servicoExiste)
+            {
+                return BadRequest("Serviço não encontrado.");
+            }
+
+            // Verificar conflito de horário
+            var horarioOcupado = await _context.Agendamentos
+                .AnyAsync(a =>
+                    a.Id != id &&
+                    a.BarbeiroId == agendamentoDTO.BarbeiroId &&
+                    a.Data == agendamentoDTO.Data &&
+                    a.Horario == agendamentoDTO.Horario &&
+                    a.Status != "Cancelado"
+                );
+
+            if (horarioOcupado)
+            {
+                return Conflict(
+                    "Este barbeiro já possui um agendamento neste horário."
+                );
+            }
+
+            agendamento.ClienteId = agendamentoDTO.ClienteId;
+            agendamento.BarbeiroId = agendamentoDTO.BarbeiroId;
+            agendamento.ServicoId = agendamentoDTO.ServicoId;
+            agendamento.Data = agendamentoDTO.Data;
+            agendamento.Horario = agendamentoDTO.Horario;
 
             await _context.SaveChangesAsync();
 
@@ -159,7 +194,7 @@ namespace BarbeariaAPI.Controllers
 
             if (agendamento == null)
             {
-                return NotFound();
+                return NotFound("Agendamento não encontrado.");
             }
 
             agendamento.Status = "Cancelado";
@@ -172,10 +207,23 @@ namespace BarbeariaAPI.Controllers
             });
         }
 
-        private bool AgendamentoExiste(int id)
+        // DELETE: api/agendamentos/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteAgendamento(int id)
         {
-            return _context.Agendamentos
-                .Any(e => e.Id == id);
+            var agendamento = await _context.Agendamentos
+                .FindAsync(id);
+
+            if (agendamento == null)
+            {
+                return NotFound("Agendamento não encontrado.");
+            }
+
+            _context.Agendamentos.Remove(agendamento);
+
+            await _context.SaveChangesAsync();
+
+            return NoContent();
         }
     }
 }

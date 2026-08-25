@@ -1,7 +1,8 @@
+using BarbeariaAPI.Data;
+using BarbeariaAPI.DTOs;
+using BarbeariaAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using BarbeariaAPI.Data;
-using BarbeariaAPI.Models;
 
 namespace BarbeariaAPI.Controllers
 {
@@ -31,7 +32,7 @@ namespace BarbeariaAPI.Controllers
 
             if (servico == null)
             {
-                return NotFound();
+                return NotFound("Serviço não encontrado.");
             }
 
             return servico;
@@ -39,9 +40,19 @@ namespace BarbeariaAPI.Controllers
 
         // POST: api/servicos
         [HttpPost]
-        public async Task<ActionResult<Servico>> PostServico(Servico servico)
+        public async Task<ActionResult<Servico>> PostServico(
+            ServicoDTO servicoDTO)
         {
+            var servico = new Servico
+            {
+                Nome = servicoDTO.Nome,
+                Descricao = servicoDTO.Descricao,
+                Preco = servicoDTO.Preco,
+                DuracaoMinutos = servicoDTO.DuracaoMinutos
+            };
+
             _context.Servicos.Add(servico);
+
             await _context.SaveChangesAsync();
 
             return CreatedAtAction(
@@ -55,28 +66,21 @@ namespace BarbeariaAPI.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutServico(
             int id,
-            Servico servico)
+            ServicoDTO servicoDTO)
         {
-            if (id != servico.Id)
+            var servico = await _context.Servicos.FindAsync(id);
+
+            if (servico == null)
             {
-                return BadRequest();
+                return NotFound("Serviço não encontrado.");
             }
 
-            _context.Entry(servico).State = EntityState.Modified;
+            servico.Nome = servicoDTO.Nome;
+            servico.Descricao = servicoDTO.Descricao;
+            servico.Preco = servicoDTO.Preco;
+            servico.DuracaoMinutos = servicoDTO.DuracaoMinutos;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ServicoExiste(id))
-                {
-                    return NotFound();
-                }
-
-                throw;
-            }
+            await _context.SaveChangesAsync();
 
             return NoContent();
         }
@@ -89,18 +93,14 @@ namespace BarbeariaAPI.Controllers
 
             if (servico == null)
             {
-                return NotFound();
+                return NotFound("Serviço não encontrado.");
             }
 
             _context.Servicos.Remove(servico);
+
             await _context.SaveChangesAsync();
 
             return NoContent();
-        }
-
-        private bool ServicoExiste(int id)
-        {
-            return _context.Servicos.Any(e => e.Id == id);
         }
     }
 }

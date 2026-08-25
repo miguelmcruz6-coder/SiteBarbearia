@@ -1,7 +1,8 @@
+using BarbeariaAPI.Data;
+using BarbeariaAPI.DTOs;
+using BarbeariaAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using BarbeariaAPI.Data;
-using BarbeariaAPI.Models;
 
 namespace BarbeariaAPI.Controllers
 {
@@ -31,7 +32,7 @@ namespace BarbeariaAPI.Controllers
 
             if (cliente == null)
             {
-                return NotFound();
+                return NotFound("Cliente não encontrado.");
             }
 
             return cliente;
@@ -39,9 +40,19 @@ namespace BarbeariaAPI.Controllers
 
         // POST: api/clientes
         [HttpPost]
-        public async Task<ActionResult<Cliente>> PostCliente(Cliente cliente)
+        public async Task<ActionResult<Cliente>> PostCliente(
+            ClienteDTO clienteDTO)
         {
+            var cliente = new Cliente
+            {
+                Nome = clienteDTO.Nome,
+                CPF = clienteDTO.CPF,
+                Telefone = clienteDTO.Telefone,
+                Email = clienteDTO.Email
+            };
+
             _context.Clientes.Add(cliente);
+
             await _context.SaveChangesAsync();
 
             return CreatedAtAction(
@@ -53,28 +64,23 @@ namespace BarbeariaAPI.Controllers
 
         // PUT: api/clientes/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCliente(int id, Cliente cliente)
+        public async Task<IActionResult> PutCliente(
+            int id,
+            ClienteDTO clienteDTO)
         {
-            if (id != cliente.Id)
+            var cliente = await _context.Clientes.FindAsync(id);
+
+            if (cliente == null)
             {
-                return BadRequest();
+                return NotFound("Cliente não encontrado.");
             }
 
-            _context.Entry(cliente).State = EntityState.Modified;
+            cliente.Nome = clienteDTO.Nome;
+            cliente.CPF = clienteDTO.CPF;
+            cliente.Telefone = clienteDTO.Telefone;
+            cliente.Email = clienteDTO.Email;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ClienteExiste(id))
-                {
-                    return NotFound();
-                }
-
-                throw;
-            }
+            await _context.SaveChangesAsync();
 
             return NoContent();
         }
@@ -87,18 +93,14 @@ namespace BarbeariaAPI.Controllers
 
             if (cliente == null)
             {
-                return NotFound();
+                return NotFound("Cliente não encontrado.");
             }
 
             _context.Clientes.Remove(cliente);
+
             await _context.SaveChangesAsync();
 
             return NoContent();
-        }
-
-        private bool ClienteExiste(int id)
-        {
-            return _context.Clientes.Any(e => e.Id == id);
         }
     }
 }
