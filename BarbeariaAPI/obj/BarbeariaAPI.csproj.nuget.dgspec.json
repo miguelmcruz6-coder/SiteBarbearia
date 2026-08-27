@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\vinic\\OneDrive\\Documentos\\Atividades\\SiteBarbearia\\ProjetoAtual\\BarbeariaAPI\\BarbeariaAPI.csproj": {}
+    "C:\\Users\\486584624\\Documents\\SiteBarbearia\\BarbeariaAPI\\BarbeariaAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\vinic\\OneDrive\\Documentos\\Atividades\\SiteBarbearia\\ProjetoAtual\\BarbeariaAPI\\BarbeariaAPI.csproj": {
+    "C:\\Users\\486584624\\Documents\\SiteBarbearia\\BarbeariaAPI\\BarbeariaAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\vinic\\OneDrive\\Documentos\\Atividades\\SiteBarbearia\\ProjetoAtual\\BarbeariaAPI\\BarbeariaAPI.csproj",
+        "projectUniqueName": "C:\\Users\\486584624\\Documents\\SiteBarbearia\\BarbeariaAPI\\BarbeariaAPI.csproj",
         "projectName": "BarbeariaAPI",
-        "projectPath": "C:\\Users\\vinic\\OneDrive\\Documentos\\Atividades\\SiteBarbearia\\ProjetoAtual\\BarbeariaAPI\\BarbeariaAPI.csproj",
-        "packagesPath": "C:\\Users\\vinic\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\vinic\\OneDrive\\Documentos\\Atividades\\SiteBarbearia\\ProjetoAtual\\BarbeariaAPI\\obj\\",
+        "projectPath": "C:\\Users\\486584624\\Documents\\SiteBarbearia\\BarbeariaAPI\\BarbeariaAPI.csproj",
+        "packagesPath": "C:\\Users\\486584624\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\486584624\\Documents\\SiteBarbearia\\BarbeariaAPI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\vinic\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\486584624\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -24,7 +24,6 @@
         },
         "frameworks": {
           "net8.0": {
-            "framework": "net8.0",
             "targetAlias": "net8.0",
             "projectReferences": {}
           }
@@ -38,12 +37,10 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        },
-        "SdkAnalysisLevel": "10.0.300"
+        }
       },
       "frameworks": {
         "net8.0": {
-          "framework": "net8.0",
           "targetAlias": "net8.0",
           "dependencies": {
             "Microsoft.EntityFrameworkCore.Design": {
@@ -72,24 +69,6 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[8.0.29, 8.0.29]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Host.win-x64",
-              "version": "[8.0.29, 8.0.29]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Ref",
-              "version": "[8.0.29, 8.0.29]"
-            },
-            {
-              "name": "Microsoft.WindowsDesktop.App.Ref",
-              "version": "[8.0.29, 8.0.29]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -98,7 +77,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.302/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.302/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

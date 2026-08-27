@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using BarbeariaAPI.Data;
 using BarbeariaAPI.DTOs;
 using BarbeariaAPI.Models;
@@ -79,6 +80,23 @@ namespace BarbeariaAPI.Controllers
             cliente.CPF = clienteDTO.CPF;
             cliente.Telefone = clienteDTO.Telefone;
             cliente.Email = clienteDTO.Email;
+
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        [HttpPut("TornarAdmin/{id}")]
+        public async Task<IActionResult> TornarAdmin(int id)
+        {
+            var cliente = _context.Clientes.Find(id);
+
+            if (cliente == null)
+            {
+                return NotFound("Cliente não encontrado.");
+            }
+
+            cliente.Admin = true;
 
             await _context.SaveChangesAsync();
 
