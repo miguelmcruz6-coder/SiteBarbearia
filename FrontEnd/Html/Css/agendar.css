@@ -1,15 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap");
-:root {
-  --gold: #c99a3d;
-  --ink: #161616;
-  --paper: #f5f1e8;
-  --white: #fff;
-  --sidebar: 260px;
-}
+
 * {
-  box-sizing: border-box;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 body {
   min-height: 100vh;
@@ -100,9 +94,7 @@ main {
   border: 0;
   border-radius: 7px;
   cursor: pointer;
-  font:
-    600 0.95rem "Montserrat",
-    sans-serif;
+  font: 600 0.95rem "Montserrat", sans-serif;
   transition: 0.2s;
 }
 #confirmarAgendamento:hover {

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sobre a Barbearia</title>
+    <link rel="stylesheet" href="Css/sobre.css" />
+    <link rel="stylesheet" href="Css/header.css" />
+    <script src="Js/sobre.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <img
+        src="Imagens/Logo.png"
+        alt="Logo da Barbearia Imperial"
+        id="imagemCentralHeader"
+      />
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="agendar.html">Agendar</a></li>
+        <li><a href="sobre.html" class="ativo">Sobre a Barbearia</a></li>
+      </ul>
+    </header>
+
+    <main>
+      <section class="sobre">
+        <img src="Imagens/Logo.png" alt="Barbearia Imperial" class="logo-sobre" />
+        <p class="subtitulo">Tradição, cuidado e estilo em cada atendimento.</p>
+
+        <div class="conteudo-sobre">
+          <article>
+            <h2>Nossa história</h2>
+            <p>
+              A Barbearia Imperial foi criada para oferecer um ambiente confortável,
+              atendimento de qualidade e serviços pensados para cuidar do estilo de
+              cada cliente.
+            </p>
+          </article>
+
+          <article>
+            <h2>Nosso compromisso</h2>
+            <p>
+              Trabalhamos com atenção aos detalhes, pontualidade e profissionais
+              preparados para proporcionar uma experiência completa.
+            </p>
+          </article>
+
+          <article>
+            <h2>Atendimento</h2>
+            <p>
+              Escolha o serviço, o profissional, a data e o horário pela página de
+              agendamento.
+            </p>
+          </article>
+        </div>
+
+        <button type="button" id="irParaAgendamento">Agendar meu horário</button>
+        <p id="mensagemSobre" aria-live="polite"></p>
+      </section>
+    </main>
+  </body>
+</html>

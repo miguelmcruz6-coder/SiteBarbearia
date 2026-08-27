@@ -1,50 +1,50 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap");
-:root {
-  --gold: #c99a3d;
-  --ink: #161616;
-  --paper: #f5f1e8;
-  --white: #fff;
-  --sidebar: 280px;
-}
+
 * {
-  box-sizing: border-box;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
+
 body {
   min-height: 100vh;
-  color: var(--white);
-  background:
-    radial-gradient(circle at 80% 15%, #c99a3d2b, transparent 32rem),
-    linear-gradient(135deg, #111, #27231d);
+  color: white;
+  background: #111111;
   font-family: "Montserrat", sans-serif;
 }
+
 header {
   position: fixed;
   z-index: 10;
-  inset: 0 auto 0 0;
+  top: 0;
+  left: 0;
   display: flex;
-  width: var(--sidebar);
+  width: 220px;
+  height: 100vh;
   flex-direction: column;
   overflow: hidden;
-  color: var(--ink);
-  background: var(--paper);
-  border-right: 1px solid #c99a3d59;
+  color: white;
+  background: #181818;
+  border-right: 1px solid #333333;
   box-shadow: 8px 0 30px #00000047;
 }
+
 header img {
   width: 100%;
   height: 220px;
   padding: 24px;
   object-fit: contain;
-  background: var(--ink);
+  background: #181818;
 }
+
 header ul {
   width: 100%;
   list-style: none;
 }
+
 header li {
   padding: 19px 28px;
+  color: white;
   border-bottom: 1px solid #1616161a;
   cursor: pointer;
   font-size: 0.88rem;
@@ -52,19 +52,37 @@ header li {
   letter-spacing: 0.06em;
   transition: 0.2s;
 }
+
+header li a {
+  display: flex;
+  width: 100%;
+  color: white;
+  text-decoration: none;
+}
+
+header li a:visited {
+  color: white;
+}
+
+header li a:active {
+  color: white;
+}
+
 header li:hover {
   padding-left: 34px;
-  color: var(--white);
-  background: var(--gold);
+  color: white;
+  background: #2b2b2b;
 }
-main#initial {
+
+main {
   display: grid;
   min-height: 100vh;
-  margin-left: var(--sidebar);
+  margin-left: 220px;
   padding: clamp(30px, 6vw, 90px);
   place-items: center;
 }
-main#initial > #initial {
+
+main > #initial {
   width: min(850px, 100%);
   padding: clamp(30px, 7vw, 80px);
   background: #ffffff0b;
@@ -73,40 +91,74 @@ main#initial > #initial {
   box-shadow: 0 30px 80px #00000047;
   backdrop-filter: blur(8px);
 }
+
 #Logo {
-  display: none;
+  display: block;
+  width: 300px;
+  height: auto;
+  margin: 0 auto 35px auto;
+  object-fit: contain;
 }
+
 #servicos {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 18px;
   list-style: none;
 }
+
 #servicos li {
   list-style: none;
 }
+
 #servicos a {
   display: grid;
-  min-height: 130px;
+  min-height: 220px;
   padding: 24px;
   place-items: center;
-  color: var(--white);
-  text-align: center;
-  text-decoration: none;
-  background: #202020;
-  border: 1px solid #e6bd6838;
+  background: #181818;
+  border: 1px solid #3a3a3a;
   border-radius: 10px;
-  font-size: 0.95rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
+  text-decoration: none;
   transition: 0.25s;
 }
+
+#servicos a img {
+  display: block;
+  width: 160px;
+  height: 160px;
+  object-fit: contain;
+}
+
 #servicos a:hover {
   transform: translateY(-5px);
-  color: var(--ink);
-  background: #e6bd68;
-  border-color: #e6bd68;
+  background: #181818;
+  border-color: #555555;
 }
+
+#servicos a:nth-child(1) {
+  background: #183038;
+}
+
+#servicos a:nth-child(2) {
+  background: #2c2638;
+}
+
+#servicos a:nth-child(3) {
+  background: #352a22;
+}
+
+#servicos a:nth-child(4) {
+  background: #223426;
+}
+
+#servicos a:nth-child(1):hover,
+#servicos a:nth-child(2):hover,
+#servicos a:nth-child(3):hover,
+#servicos a:nth-child(4):hover {
+  filter: brightness(1.15);
+}
+
 @media (max-width: 760px) {
   header {
     position: static;
@@ -129,12 +181,13 @@ main#initial > #initial {
   header li:hover {
     padding-left: 8px;
   }
-  main#initial {
+  main {
     min-height: calc(100vh - 145px);
     margin-left: 0;
     padding: 24px 16px;
   }
 }
+
 @media (max-width: 500px) {
   #servicos {
     grid-template-columns: 1fr;
