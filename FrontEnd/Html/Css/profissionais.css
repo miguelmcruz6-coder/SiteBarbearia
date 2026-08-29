@@ -41,11 +41,6 @@ header li {
   font-weight: 600;
   transition: 0.2s;
 }
-header li:hover {
-  padding-left: 30px;
-  color: var(--white);
-  background: var(--gold);
-}
 main {
   display: flex;
   min-height: 100vh;
@@ -72,7 +67,6 @@ main p {
   padding: 19px 25px;
   text-align: center;
   background: var(--white);
-  border-left: 4px solid var(--gold);
   border-radius: 6px;
   box-shadow: 0 10px 30px #00000014;
   font-weight: 500;
@@ -99,9 +93,6 @@ main p:hover {
     flex: 1;
     text-align: center;
     font-size: 0.72rem;
-  }
-  header li:hover {
-    padding-left: 6px;
   }
   main {
     min-height: calc(100vh - 180px);

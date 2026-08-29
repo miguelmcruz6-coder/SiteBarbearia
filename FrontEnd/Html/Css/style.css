@@ -8,8 +8,8 @@
 
 body {
   min-height: 100vh;
-  color: white;
-  background: #111111;
+  color: #292929;
+  background: linear-gradient(135deg, #ece7dc, #ffffff);
   font-family: "Montserrat", sans-serif;
 }
 
@@ -68,12 +68,6 @@ header li a:active {
   color: white;
 }
 
-header li:hover {
-  padding-left: 34px;
-  color: white;
-  background: #2b2b2b;
-}
-
 main {
   display: grid;
   min-height: 100vh;
@@ -85,7 +79,7 @@ main {
 main > #initial {
   width: min(850px, 100%);
   padding: clamp(30px, 7vw, 80px);
-  background: #ffffff0b;
+  background: #181818;
   border: 1px solid #e6bd6840;
   border-radius: 18px;
   box-shadow: 0 30px 80px #00000047;
@@ -112,15 +106,23 @@ main > #initial {
 }
 
 #servicos a {
-  display: grid;
+  display: flex;
   min-height: 220px;
   padding: 24px;
-  place-items: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
   background: #181818;
   border: 1px solid #3a3a3a;
   border-radius: 10px;
   text-decoration: none;
   transition: 0.25s;
+}
+
+#servicos a span {
+  color: white;
+  font-family: inherit;
 }
 
 #servicos a img {
@@ -134,29 +136,6 @@ main > #initial {
   transform: translateY(-5px);
   background: #181818;
   border-color: #555555;
-}
-
-#servicos a:nth-child(1) {
-  background: #183038;
-}
-
-#servicos a:nth-child(2) {
-  background: #2c2638;
-}
-
-#servicos a:nth-child(3) {
-  background: #352a22;
-}
-
-#servicos a:nth-child(4) {
-  background: #223426;
-}
-
-#servicos a:nth-child(1):hover,
-#servicos a:nth-child(2):hover,
-#servicos a:nth-child(3):hover,
-#servicos a:nth-child(4):hover {
-  filter: brightness(1.15);
 }
 
 @media (max-width: 760px) {
@@ -177,9 +156,6 @@ main > #initial {
     flex: 1;
     text-align: center;
     font-size: 0.7rem;
-  }
-  header li:hover {
-    padding-left: 8px;
   }
   main {
     min-height: calc(100vh - 145px);

@@ -41,11 +41,6 @@ header li {
   font-weight: 600;
   transition: 0.2s;
 }
-header li:hover {
-  padding-left: 30px;
-  color: var(--white);
-  background: var(--gold);
-}
 main {
   display: flex;
   min-height: 100vh;
@@ -79,7 +74,6 @@ main p {
   padding: 20px;
   text-align: center;
   background: var(--white);
-  border-bottom: 3px solid var(--gold);
   border-radius: 7px;
   box-shadow: 0 10px 28px #00000014;
   font-weight: 500;
@@ -88,9 +82,6 @@ main p {
 main p:hover {
   transform: translateY(-3px);
   box-shadow: 0 14px 34px #00000021;
-}
-main p:last-child {
-  grid-column: 1/-1;
 }
 @media (max-width: 700px) {
   header {
@@ -110,9 +101,6 @@ main p:last-child {
     text-align: center;
     font-size: 0.72rem;
   }
-  header li:hover {
-    padding-left: 6px;
-  }
   main {
     min-height: calc(100vh - 180px);
     margin-left: 0;
@@ -121,8 +109,7 @@ main p:last-child {
   main > div {
     grid-template-columns: 1fr;
   }
-  h3,
-  main p:last-child {
+  h3 {
     grid-column: auto;
   }
 }

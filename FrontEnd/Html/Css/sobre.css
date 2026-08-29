@@ -9,7 +9,7 @@
 body {
   min-height: 100vh;
   color: white;
-  background: #111111;
+  background: linear-gradient(135deg, #ede7dc, #ffffff);
   font-family: "Montserrat", sans-serif;
 }
 
@@ -38,7 +38,7 @@ main {
 
 .subtitulo {
   margin: 10px 0 34px;
-  color: #d1b06b;
+  color: white;
   font-size: 1.05rem;
 }
 
@@ -58,7 +58,7 @@ main {
 
 .conteudo-sobre h2 {
   margin-bottom: 12px;
-  color: #d1b06b;
+  color: white;
   font-size: 1.05rem;
 }
 
@@ -76,7 +76,9 @@ main {
   border: 0;
   border-radius: 7px;
   cursor: pointer;
-  font: 700 0.92rem "Montserrat", sans-serif;
+  font:
+    700 0.92rem "Montserrat",
+    sans-serif;
   transition: 0.2s;
 }
 
