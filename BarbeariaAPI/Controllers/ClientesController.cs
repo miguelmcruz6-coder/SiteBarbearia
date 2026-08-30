@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using BarbeariaAPI.Data;
 using BarbeariaAPI.DTOs;
 using BarbeariaAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,6 +10,7 @@ namespace BarbeariaAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin")]
     public class ClientesController : ControllerBase
     {
         private readonly BarbeariaContext _context;

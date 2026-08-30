@@ -30,13 +30,13 @@ main {
   box-shadow: 0 30px 80px #00000047;
 }
 
-.logo-sobre {
+#logo-sobre {
   width: min(300px, 80%);
   height: auto;
   object-fit: contain;
 }
 
-.subtitulo {
+#subtitulo {
   margin: 10px 0 34px;
   color: white;
   font-size: 1.05rem;

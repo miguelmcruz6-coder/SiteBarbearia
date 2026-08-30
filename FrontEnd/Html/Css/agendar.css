@@ -72,6 +72,29 @@ main {
   font-weight: 700;
   text-align: center;
 }
+#usuario-agendamento {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 4px;
+  font-size: 0.82rem;
+}
+#nome-usuario {
+  font-weight: 700;
+}
+#usuario-agendamento a {
+  color: #8a681f;
+  font-weight: 600;
+}
+#botao-sair {
+  padding: 6px 10px;
+  color: #ffffff;
+  background: #292929;
+  border: 0;
+  border-radius: 5px;
+  cursor: pointer;
+}
 #agendamento input,
 #agendamento select {
   width: 100%;
@@ -94,8 +117,8 @@ main {
   width: 100%;
   min-height: 52px;
   margin-top: 5px;
-  color: var(--white);
-  background: var(--ink);
+  color: white;
+  background: black;
   border: 0;
   border-radius: 7px;
   cursor: pointer;
@@ -106,7 +129,7 @@ main {
 }
 #confirmarAgendamento:hover {
   transform: translateY(-2px);
-  background: var(--gold);
+  background: rgb(69, 69, 69);
 }
 #confirmarAgendamento:disabled {
   opacity: 0.55;
@@ -118,6 +141,12 @@ main {
   font-size: 0.9rem;
   font-weight: 500;
   text-align: center;
+}
+#mensagem[data-tipo="erro"] {
+  color: #a52626;
+}
+#mensagem[data-tipo="sucesso"] {
+  color: #38723c;
 }
 @media (max-width: 700px) {
   header {
@@ -142,5 +171,8 @@ main {
   #agendamento {
     min-height: calc(100vh - 185px);
     padding: 35px 5px;
+  }
+  #usuario-agendamento {
+    flex-wrap: wrap;
   }
 }

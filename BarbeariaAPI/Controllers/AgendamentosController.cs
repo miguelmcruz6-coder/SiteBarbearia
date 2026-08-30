@@ -1,6 +1,8 @@
+using System.Security.Claims;
 using BarbeariaAPI.Data;
 using BarbeariaAPI.DTOs;
 using BarbeariaAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,7 +19,98 @@ namespace BarbeariaAPI.Controllers
             _context = context;
         }
 
+        // GET: api/agendamentos/horarios-disponiveis?barbeiroId=1&data=2026-08-30
+        [Authorize]
+        [HttpGet("horarios-disponiveis")]
+        public async Task<IActionResult> GetHorariosDisponiveis(
+            int barbeiroId,
+            DateTime data)
+        {
+            if (barbeiroId <= 0 || data == default)
+            {
+                return BadRequest("Informe o profissional e a data.");
+            }
+
+            if (data.Date < DateTime.Today)
+            {
+                return BadRequest("A data não pode estar no passado.");
+            }
+
+            var barbeiroExiste = await _context.Barbeiros
+                .AnyAsync(b => b.Id == barbeiroId);
+
+            if (!barbeiroExiste)
+            {
+                return NotFound("Profissional não encontrado.");
+            }
+
+            var horariosOcupados = await _context.Agendamentos
+                .Where(a =>
+                    a.BarbeiroId == barbeiroId &&
+                    a.Data.Date == data.Date &&
+                    a.Status != "Cancelado")
+                .Select(a => a.Horario)
+                .ToListAsync();
+
+            var horariosDisponiveis = new List<string>();
+
+            for (var horario = TimeSpan.FromHours(8);
+                 horario <= TimeSpan.FromHours(18);
+                 horario = horario.Add(TimeSpan.FromMinutes(30)))
+            {
+                if (!horariosOcupados.Contains(horario))
+                {
+                    horariosDisponiveis.Add(horario.ToString(@"hh\:mm"));
+                }
+            }
+
+            return Ok(horariosDisponiveis);
+        }
+
+        // GET: api/agendamentos/meus
+        [Authorize]
+        [HttpGet("meus")]
+        public async Task<IActionResult> GetMeusAgendamentos()
+        {
+            var clienteIdTexto = User.FindFirst(
+                ClaimTypes.NameIdentifier
+            )?.Value;
+
+            if (!int.TryParse(clienteIdTexto, out var clienteId))
+            {
+                return Unauthorized("Token inválido.");
+            }
+
+            var agendamentos = await _context.Agendamentos
+                .Where(a => a.ClienteId == clienteId)
+                .OrderByDescending(a => a.Data)
+                .ThenByDescending(a => a.Horario)
+                .Select(a => new
+                {
+                    a.Id,
+                    a.Data,
+                    a.Horario,
+                    a.Status,
+                    barbeiro = new
+                    {
+                        a.Barbeiro.Id,
+                        a.Barbeiro.Nome
+                    },
+                    servico = new
+                    {
+                        a.Servico.Id,
+                        a.Servico.Nome,
+                        a.Servico.Preco,
+                        a.Servico.DuracaoMinutos
+                    }
+                })
+                .ToListAsync();
+
+            return Ok(agendamentos);
+        }
+
         // GET: api/agendamentos
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Agendamento>>> GetAgendamentos()
         {
@@ -29,6 +122,7 @@ namespace BarbeariaAPI.Controllers
         }
 
         // GET: api/agendamentos/5
+        [Authorize(Roles = "Admin")]
         [HttpGet("{id}")]
         public async Task<ActionResult<Agendamento>> GetAgendamento(int id)
         {
@@ -47,17 +141,18 @@ namespace BarbeariaAPI.Controllers
         }
 
         // POST: api/agendamentos
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<Agendamento>> PostAgendamento(
             AgendamentoDTO agendamentoDTO)
         {
-            // Verificar cliente
-            var clienteExiste = await _context.Clientes
-                .AnyAsync(c => c.Id == agendamentoDTO.ClienteId);
+            var clienteIdTexto = User.FindFirst(
+                ClaimTypes.NameIdentifier
+            )?.Value;
 
-            if (!clienteExiste)
+            if (!int.TryParse(clienteIdTexto, out var clienteId))
             {
-                return BadRequest("Cliente não encontrado.");
+                return Unauthorized("Token inválido.");
             }
 
             // Verificar barbeiro
@@ -97,7 +192,7 @@ namespace BarbeariaAPI.Controllers
             // Criar agendamento
             var agendamento = new Agendamento
             {
-                ClienteId = agendamentoDTO.ClienteId,
+                ClienteId = clienteId,
                 BarbeiroId = agendamentoDTO.BarbeiroId,
                 ServicoId = agendamentoDTO.ServicoId,
                 Data = agendamentoDTO.Data,
@@ -117,6 +212,7 @@ namespace BarbeariaAPI.Controllers
         }
 
         // PUT: api/agendamentos/5
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAgendamento(
             int id,
@@ -186,6 +282,7 @@ namespace BarbeariaAPI.Controllers
         }
 
         // PUT: api/agendamentos/5/cancelar
+        [Authorize]
         [HttpPut("{id}/cancelar")]
         public async Task<IActionResult> CancelarAgendamento(int id)
         {
@@ -195,6 +292,20 @@ namespace BarbeariaAPI.Controllers
             if (agendamento == null)
             {
                 return NotFound("Agendamento não encontrado.");
+            }
+
+            var clienteIdTexto = User.FindFirst(
+                ClaimTypes.NameIdentifier
+            )?.Value;
+
+            if (!int.TryParse(clienteIdTexto, out var clienteId))
+            {
+                return Unauthorized("Token inválido.");
+            }
+
+            if (agendamento.ClienteId != clienteId && !User.IsInRole("Admin"))
+            {
+                return Forbid();
             }
 
             agendamento.Status = "Cancelado";
@@ -208,6 +319,7 @@ namespace BarbeariaAPI.Controllers
         }
 
         // DELETE: api/agendamentos/5
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAgendamento(int id)
         {

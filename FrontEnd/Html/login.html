@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="Css/login.css" />
+    <title>Login</title>
+  </head>
+  <body>
+    <main>
+      <section class="login-card login-card-com-logo">
+        <img src="Imagens/Logo.png" alt="Barbearia" id="logo-login" />
+        <div class="conteudo-login">
+          <h1 id="titulo-login">Entrar</h1>
+          <form id="formLogin">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" autocomplete="email" required />
+
+            <label for="senha">Senha</label>
+            <input
+              type="password"
+              id="senha"
+              autocomplete="current-password"
+              required
+            />
+
+            <button type="submit" id="botao-login">Entrar</button>
+          </form>
+          <p id="mensagemLogin" aria-live="polite"></p>
+          <p id="cadastro-link">
+            Ainda não possui uma conta?
+            <a href="cadastro.html">Cadastre-se</a>
+          </p>
+        </div>
+      </section>
+    </main>
+    <script type="module" src="Js/login.js"></script>
+  </body>
+</html>

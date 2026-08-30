@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -20,16 +20,19 @@
         <li><a href="profissionais.html">Profissionais</a></li>
         <li><a href="servicos.html">Serviços</a></li>
         <li><a href="agendar.html" class="ativo">Agendar</a></li>
+        <li><a href="meus-agendamentos.html">Agendamentos</a></li>
         <li><a href="sobre.html">Sobre a Barbearia</a></li>
       </ul>
     </header>
     <main>
       <div id="agendamento">
         <img src="Imagens/Logo.png" id="logo-Agendar" />
-        <input id="Nome" type="text" placeholder="Nome" />
-        <input id="cpf" type="text" placeholder="CPF" />
-        <input id="telefone" type="tel" placeholder="Telefone" />
-        <input id="email" type="email" placeholder="E-mail" />
+
+        <div id="usuario-agendamento">
+          <span id="nome-usuario"></span>
+          <a href="meus-agendamentos.html">Meus agendamentos</a>
+          <button type="button" id="botao-sair">Sair</button>
+        </div>
 
         <select id="servico">
           <option value="">Escolha o serviço</option>
@@ -41,15 +44,16 @@
 
         <input id="data" type="date" />
 
-        <select id="horario">
-          <option value="">Escolha o horario</option>
+        <select id="horario" disabled>
+          <option value="">Horário</option>
         </select>
 
-        <button id="confirmarAgendamento">Confirmar pagamento</button>
+        <button id="confirmarAgendamento">Confirmar agendamento</button>
 
         <p id="mensagem"></p>
       </div>
     </main>
-    <script src="Js/main.js"></script>
+    <script type="module" src="Js/proteger-pagina.js"></script>
+    <script type="module" src="Js/agendar.js"></script>
   </body>
 </html>

@@ -4,6 +4,7 @@ using BarbeariaAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BarbeariaAPI.Migrations
 {
     [DbContext(typeof(BarbeariaContext))]
-    partial class BarbeariaContextModelSnapshot : ModelSnapshot
+    [Migration("20260829203903_AdicionarSenhaHashCliente")]
+    partial class AdicionarSenhaHashCliente
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -75,18 +78,6 @@ namespace BarbeariaAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Barbeiros");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Nome = "Vinicius Silva Lima"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Nome = "Miguel Miyaki da Cruz"
-                        });
                 });
 
             modelBuilder.Entity("BarbeariaAPI.Models.Cliente", b =>
@@ -145,78 +136,11 @@ namespace BarbeariaAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Preco")
-                        .HasPrecision(10, 2)
-                        .HasColumnType("decimal(10,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Servicos");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Descricao = "Corte de cabelo completo",
-                            DuracaoMinutos = 60,
-                            Nome = "Cabelo completo",
-                            Preco = 0m
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Descricao = "Serviço completo de barba",
-                            DuracaoMinutos = 30,
-                            Nome = "Barba completa",
-                            Preco = 0m
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Descricao = "Design de sobrancelha",
-                            DuracaoMinutos = 15,
-                            Nome = "Sobrancelha",
-                            Preco = 0m
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Descricao = "Corte feito com máquina",
-                            DuracaoMinutos = 30,
-                            Nome = "Máquina",
-                            Preco = 0m
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Descricao = "Corte completo com hidratação",
-                            DuracaoMinutos = 90,
-                            Nome = "Cabelo completo + Hidratação",
-                            Preco = 0m
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Descricao = "Combo de cabelo, barba e sobrancelha",
-                            DuracaoMinutos = 90,
-                            Nome = "Cabelo completo + Barba + Sobrancelha",
-                            Preco = 0m
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Descricao = "Depilação nasal com cera",
-                            DuracaoMinutos = 15,
-                            Nome = "Depilação a cera do nariz",
-                            Preco = 0m
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Descricao = "Depilação da sobrancelha com cera",
-                            DuracaoMinutos = 15,
-                            Nome = "Depilação a cera da sobrancelha",
-                            Preco = 0m
-                        });
                 });
 
             modelBuilder.Entity("BarbeariaAPI.Models.Agendamento", b =>

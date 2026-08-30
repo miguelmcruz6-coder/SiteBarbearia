@@ -1,6 +1,7 @@
 using BarbeariaAPI.Data;
 using BarbeariaAPI.DTOs;
 using BarbeariaAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,6 +19,7 @@ namespace BarbeariaAPI.Controllers
         }
 
         // GET: api/barbeiros
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Barbeiro>>> GetBarbeiros()
         {
@@ -25,6 +27,7 @@ namespace BarbeariaAPI.Controllers
         }
 
         // GET: api/barbeiros/5
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<Barbeiro>> GetBarbeiro(int id)
         {
@@ -39,6 +42,7 @@ namespace BarbeariaAPI.Controllers
         }
 
         // POST: api/barbeiros
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<ActionResult<Barbeiro>> PostBarbeiro(
             BarbeiroDTO barbeiroDTO)
@@ -60,6 +64,7 @@ namespace BarbeariaAPI.Controllers
         }
 
         // PUT: api/barbeiros/5
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBarbeiro(
             int id,
@@ -80,6 +85,7 @@ namespace BarbeariaAPI.Controllers
         }
 
         // DELETE: api/barbeiros/5
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBarbeiro(int id)
         {

@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Meus agendamentos</title>
+    <link rel="stylesheet" href="Css/header.css" />
+    <link rel="stylesheet" href="Css/meus-agendamentos.css" />
+  </head>
+  <body>
+    <header>
+      <img
+        src="Imagens/Logo.png"
+        alt="Logo da Barbearia Imperial"
+        id="imagemCentralHeader"
+      />
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="localizacao.html">Localização</a></li>
+        <li><a href="profissionais.html">Profissionais</a></li>
+        <li><a href="servicos.html">Serviços</a></li>
+        <li><a href="agendar.html">Agendar</a></li>
+        <li>
+          <a href="meus-agendamentos.html" class="ativo">Agendamentos</a>
+        </li>
+        <li><a href="sobre.html">Sobre a Barbearia</a></li>
+      </ul>
+    </header>
+
+    <main>
+      <section class="painel-agendamentos">
+        <div id="cabecalho-agendamentos">
+          <div>
+            <h1 id="titulo-agendamentos">Meus agendamentos</h1>
+            <p id="saudacao-cliente"></p>
+          </div>
+          <button type="button" id="botao-logout">Sair</button>
+        </div>
+
+        <p id="mensagem-agendamentos" aria-live="polite"></p>
+        <div id="lista-agendamentos"></div>
+      </section>
+    </main>
+
+    <script type="module" src="Js/proteger-pagina.js"></script>
+    <script type="module" src="Js/meus-agendamentos.js"></script>
+  </body>
+</html>

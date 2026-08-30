@@ -1,9 +1,5 @@
-:root {
-  --gold: #c99a3d;
-  --ink: #181818;
-  --paper: #181818;
-  --white: #ffffff;
-  --sidebar: 220px;
+html:not([data-autenticado]) body {
+  visibility: hidden;
 }
 
 header {
