@@ -10,17 +10,17 @@ namespace BarbeariaAPI.Models
         public int Id { get; set; }
 
         public int ClienteId { get; set; }
-        public Cliente Cliente { get; set; }
+        public Cliente Cliente { get; set; } = null!;
 
         public int BarbeiroId { get; set; }
-        public Barbeiro Barbeiro { get; set; }
+        public Barbeiro Barbeiro { get; set; } = null!;
 
         public int ServicoId { get; set; }
-        public Servico Servico { get; set; }
+        public Servico Servico { get; set; } = null!;
 
         public DateTime Data { get; set; }
         public TimeSpan Horario { get; set; }
 
-        public string Status { get; set; }
+        public string Status { get; set; } = string.Empty;
     }
 }

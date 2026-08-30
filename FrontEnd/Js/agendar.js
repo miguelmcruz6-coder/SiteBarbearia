@@ -30,7 +30,7 @@ function adicionarOpcoes(select, itens) {
   });
 }
 
-function limparHorarios(texto = "Escolha o profissional e a data") {
+function limparHorarios(texto = "Escolha o serviço, o profissional e a data") {
   horario.length = 1;
   horario.options[0].textContent = texto;
   horario.disabled = true;
@@ -45,9 +45,10 @@ function tratarErroAutenticacao(erro) {
 }
 
 async function carregarHorarios() {
+  mostrarMensagem("");
   limparHorarios("Carregando horários...");
 
-  if (!barbeiro.value || !data.value) {
+  if (!servico.value || !barbeiro.value || !data.value) {
     limparHorarios();
     return;
   }
@@ -55,6 +56,7 @@ async function carregarHorarios() {
   try {
     const parametros = new URLSearchParams({
       barbeiroId: barbeiro.value,
+      servicoId: servico.value,
       data: data.value
     });
     const horarios = await requisicao(
@@ -154,6 +156,7 @@ if (sessao) {
     String(hoje.getDate()).padStart(2, "0")
   ].join("-");
   botaoConfirmar.addEventListener("click", confirmarAgendamento);
+  servico.addEventListener("change", carregarHorarios);
   barbeiro.addEventListener("change", carregarHorarios);
   data.addEventListener("change", carregarHorarios);
   botaoSair.addEventListener("click", () => {

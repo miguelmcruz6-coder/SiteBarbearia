@@ -1,4 +1,7 @@
-export const API_URL = "http://localhost:5104/api";
+const ambienteLocal = ["localhost", "127.0.0.1"].includes(location.hostname);
+
+export const API_URL = globalThis.BARBEARIA_API_URL ??
+  (ambienteLocal ? "http://localhost:5104/api" : `${location.origin}/api`);
 
 export async function requisicao(caminho, opcoes = {}) {
   const resposta = await fetch(`${API_URL}${caminho}`, opcoes);

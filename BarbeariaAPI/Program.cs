@@ -49,9 +49,13 @@ builder.Services
 
 builder.Services.AddAuthorization();
 
+var origensProducao = builder.Configuration
+    .GetSection("Cors:AllowedOrigins")
+    .Get<string[]>() ?? Array.Empty<string>();
+
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("FrontendLocal", policy =>
+    options.AddPolicy("Frontend", policy =>
     {
         policy
             .SetIsOriginAllowed(origin =>
@@ -61,7 +65,14 @@ builder.Services.AddCors(options =>
                     return false;
                 }
 
-                return uri.Host == "localhost" || uri.Host == "127.0.0.1";
+                var origemNormalizada = origin.TrimEnd('/');
+                var origemLocal = builder.Environment.IsDevelopment() &&
+                    (uri.Host == "localhost" || uri.Host == "127.0.0.1");
+
+                return origemLocal || origensProducao.Any(configurada =>
+                    configurada.TrimEnd('/').Equals(
+                        origemNormalizada,
+                        StringComparison.OrdinalIgnoreCase));
             })
             .AllowAnyHeader()
             .AllowAnyMethod();
@@ -69,9 +80,14 @@ builder.Services.AddCors(options =>
 });
 
 // Entity Framework + SQL Server
-builder.Services.AddDbContext<BarbeariaContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+var connectionString = builder.Configuration.GetConnectionString(
+    "DefaultConnection"
+) ?? throw new InvalidOperationException(
+    "A conexão com o banco de dados não foi configurada."
 );
+
+builder.Services.AddDbContext<BarbeariaContext>(options =>
+    options.UseSqlServer(connectionString));
 
 // Swagger
 builder.Services.AddEndpointsApiExplorer();
@@ -115,7 +131,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseCors("FrontendLocal");
+app.UseCors("Frontend");
 
 app.UseAuthentication();
 
@@ -123,5 +139,6 @@ app.UseAuthorization();
 
 // Mapeia os Controllers
 app.MapControllers();
+app.MapGet("/health", () => Results.Ok(new { status = "ok" }));
 
 app.Run();

@@ -4,6 +4,7 @@ using BarbeariaAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BarbeariaAPI.Migrations
 {
     [DbContext(typeof(BarbeariaContext))]
-    partial class BarbeariaContextModelSnapshot : ModelSnapshot
+    [Migration("20260830215121_AtualizarPrecosServicos")]
+    partial class AtualizarPrecosServicos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

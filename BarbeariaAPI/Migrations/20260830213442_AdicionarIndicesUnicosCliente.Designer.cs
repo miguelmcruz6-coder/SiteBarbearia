@@ -4,6 +4,7 @@ using BarbeariaAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BarbeariaAPI.Migrations
 {
     [DbContext(typeof(BarbeariaContext))]
-    partial class BarbeariaContextModelSnapshot : ModelSnapshot
+    [Migration("20260830213442_AdicionarIndicesUnicosCliente")]
+    partial class AdicionarIndicesUnicosCliente
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -163,9 +166,9 @@ namespace BarbeariaAPI.Migrations
                         {
                             Id = 1,
                             Descricao = "Corte de cabelo completo",
-                            DuracaoMinutos = 30,
+                            DuracaoMinutos = 60,
                             Nome = "Cabelo completo",
-                            Preco = 70.00m
+                            Preco = 0m
                         },
                         new
                         {
@@ -173,7 +176,7 @@ namespace BarbeariaAPI.Migrations
                             Descricao = "Serviço completo de barba",
                             DuracaoMinutos = 30,
                             Nome = "Barba completa",
-                            Preco = 70.00m
+                            Preco = 0m
                         },
                         new
                         {
@@ -181,47 +184,47 @@ namespace BarbeariaAPI.Migrations
                             Descricao = "Design de sobrancelha",
                             DuracaoMinutos = 15,
                             Nome = "Sobrancelha",
-                            Preco = 20.00m
+                            Preco = 0m
                         },
                         new
                         {
                             Id = 4,
                             Descricao = "Corte feito com máquina",
-                            DuracaoMinutos = 20,
+                            DuracaoMinutos = 30,
                             Nome = "Máquina",
-                            Preco = 50.00m
+                            Preco = 0m
                         },
                         new
                         {
                             Id = 5,
                             Descricao = "Corte completo com hidratação",
-                            DuracaoMinutos = 50,
+                            DuracaoMinutos = 90,
                             Nome = "Cabelo completo + Hidratação",
-                            Preco = 120.00m
+                            Preco = 0m
                         },
                         new
                         {
                             Id = 6,
                             Descricao = "Combo de cabelo, barba e sobrancelha",
-                            DuracaoMinutos = 80,
+                            DuracaoMinutos = 90,
                             Nome = "Cabelo completo + Barba + Sobrancelha",
-                            Preco = 160.00m
+                            Preco = 0m
                         },
                         new
                         {
                             Id = 7,
                             Descricao = "Depilação nasal com cera",
-                            DuracaoMinutos = 20,
+                            DuracaoMinutos = 15,
                             Nome = "Depilação a cera do nariz",
-                            Preco = 35.00m
+                            Preco = 0m
                         },
                         new
                         {
                             Id = 8,
                             Descricao = "Depilação da sobrancelha com cera",
-                            DuracaoMinutos = 20,
+                            DuracaoMinutos = 15,
                             Nome = "Depilação a cera da sobrancelha",
-                            Preco = 35.00m
+                            Preco = 0m
                         });
                 });
 

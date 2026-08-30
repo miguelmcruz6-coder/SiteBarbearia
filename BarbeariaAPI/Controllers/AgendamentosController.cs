@@ -19,16 +19,17 @@ namespace BarbeariaAPI.Controllers
             _context = context;
         }
 
-        // GET: api/agendamentos/horarios-disponiveis?barbeiroId=1&data=2026-08-30
+        // GET: api/agendamentos/horarios-disponiveis
         [Authorize]
         [HttpGet("horarios-disponiveis")]
         public async Task<IActionResult> GetHorariosDisponiveis(
             int barbeiroId,
+            int servicoId,
             DateTime data)
         {
-            if (barbeiroId <= 0 || data == default)
+            if (barbeiroId <= 0 || servicoId <= 0 || data == default)
             {
-                return BadRequest("Informe o profissional e a data.");
+                return BadRequest("Informe o serviço, o profissional e a data.");
             }
 
             if (data.Date < DateTime.Today)
@@ -44,21 +45,46 @@ namespace BarbeariaAPI.Controllers
                 return NotFound("Profissional não encontrado.");
             }
 
-            var horariosOcupados = await _context.Agendamentos
+            var servico = await _context.Servicos.FindAsync(servicoId);
+
+            if (servico == null)
+            {
+                return NotFound("Serviço não encontrado.");
+            }
+
+            var agendamentosDoDia = await _context.Agendamentos
                 .Where(a =>
                     a.BarbeiroId == barbeiroId &&
                     a.Data.Date == data.Date &&
                     a.Status != "Cancelado")
-                .Select(a => a.Horario)
+                .Select(a => new
+                {
+                    a.Horario,
+                    a.Servico.DuracaoMinutos
+                })
                 .ToListAsync();
 
             var horariosDisponiveis = new List<string>();
+            var fechamento = TimeSpan.FromHours(18);
 
             for (var horario = TimeSpan.FromHours(8);
-                 horario <= TimeSpan.FromHours(18);
+                 horario < fechamento;
                  horario = horario.Add(TimeSpan.FromMinutes(30)))
             {
-                if (!horariosOcupados.Contains(horario))
+                var fimNovo = horario.Add(
+                    TimeSpan.FromMinutes(servico.DuracaoMinutos));
+                var conflita = agendamentosDoDia.Any(agendamento =>
+                {
+                    var fimExistente = agendamento.Horario.Add(
+                        TimeSpan.FromMinutes(agendamento.DuracaoMinutos));
+
+                    return horario < fimExistente &&
+                        agendamento.Horario < fimNovo;
+                });
+                var passou = data.Date == DateTime.Today &&
+                    horario <= DateTime.Now.TimeOfDay;
+
+                if (fimNovo <= fechamento && !conflita && !passou)
                 {
                     horariosDisponiveis.Add(horario.ToString(@"hh\:mm"));
                 }
@@ -164,23 +190,53 @@ namespace BarbeariaAPI.Controllers
                 return BadRequest("Barbeiro não encontrado.");
             }
 
-            // Verificar serviço
-            var servicoExiste = await _context.Servicos
-                .AnyAsync(s => s.Id == agendamentoDTO.ServicoId);
+            var servico = await _context.Servicos
+                .FindAsync(agendamentoDTO.ServicoId);
 
-            if (!servicoExiste)
+            if (servico == null)
             {
                 return BadRequest("Serviço não encontrado.");
             }
 
-            // Verificar se o horário está ocupado
-            var horarioOcupado = await _context.Agendamentos
-                .AnyAsync(a =>
+            var fechamento = TimeSpan.FromHours(18);
+            var fimNovo = agendamentoDTO.Horario.Add(
+                TimeSpan.FromMinutes(servico.DuracaoMinutos));
+            var horarioValido = agendamentoDTO.Horario >= TimeSpan.FromHours(8) &&
+                fimNovo <= fechamento &&
+                agendamentoDTO.Horario.Minutes % 30 == 0 &&
+                agendamentoDTO.Horario.Seconds == 0;
+
+            if (agendamentoDTO.Data.Date < DateTime.Today ||
+                (agendamentoDTO.Data.Date == DateTime.Today &&
+                 agendamentoDTO.Horario <= DateTime.Now.TimeOfDay))
+            {
+                return BadRequest("A data e o horário devem estar no futuro.");
+            }
+
+            if (!horarioValido)
+            {
+                return BadRequest("Horário fora do período de atendimento.");
+            }
+
+            var agendamentosDoDia = await _context.Agendamentos
+                .Where(a =>
                     a.BarbeiroId == agendamentoDTO.BarbeiroId &&
-                    a.Data == agendamentoDTO.Data &&
-                    a.Horario == agendamentoDTO.Horario &&
-                    a.Status != "Cancelado"
-                );
+                    a.Data.Date == agendamentoDTO.Data.Date &&
+                    a.Status != "Cancelado")
+                .Select(a => new
+                {
+                    a.Horario,
+                    a.Servico.DuracaoMinutos
+                })
+                .ToListAsync();
+            var horarioOcupado = agendamentosDoDia.Any(agendamento =>
+            {
+                var fimExistente = agendamento.Horario.Add(
+                    TimeSpan.FromMinutes(agendamento.DuracaoMinutos));
+
+                return agendamentoDTO.Horario < fimExistente &&
+                    agendamento.Horario < fimNovo;
+            });
 
             if (horarioOcupado)
             {
