@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="../Image/Logo.png" />
+    <title>Barbearia</title>
+    <link rel="stylesheet" href="../Css/sobre.css" />
+    <link rel="stylesheet" href="../Css/header.css" />
+  </head>
+  <body>
+    <header>
+      <img
+        src="../Image/Logo.png"
+        alt="Logo da Barbearia Imperial"
+        id="imagemCentralHeader"
+      />
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="localizacao.html">Localização</a></li>
+        <li><a href="profissionais.html">Profissionais</a></li>
+        <li><a href="servicos.html">Serviços</a></li>
+        <li><a href="agendar.html">Agendar</a></li>
+        <li><a href="meus-agendamentos.html">Agendamentos</a></li>
+        <li><a href="sobre.html" class="ativo">Sobre a Barbearia</a></li>
+      </ul>
+    </header>
+
+    <main>
+      <section class="sobre">
+        <img src="../Image/Logo.png" alt="Barbearia Imperial" id="logo-sobre" />
+        <p id="subtitulo">Tradição, cuidado e estilo em cada atendimento.</p>
+
+        <div class="conteudo-sobre">
+          <article>
+            <h2>Nossa história</h2>
+            <p>
+              A Barbearia Imperial foi criada para oferecer um ambiente
+              confortável, atendimento de qualidade e serviços pensados para
+              cuidar do estilo de cada cliente.
+            </p>
+          </article>
+
+          <article>
+            <h2>Nosso compromisso</h2>
+            <p>
+              Trabalhamos com atenção aos detalhes, pontualidade e profissionais
+              preparados para proporcionar uma experiência completa.
+            </p>
+          </article>
+
+          <article>
+            <h2>Atendimento</h2>
+            <p>
+              Escolha o serviço, o profissional, a data e o horário pela página
+              de agendamento.
+            </p>
+          </article>
+        </div>
+
+        <button type="button" id="irParaAgendamento">
+          Agendar meu horário
+        </button>
+        <p id="mensagemSobre" aria-live="polite"></p>
+      </section>
+    </main>
+    <script type="module" src="../Js/proteger-pagina.js"></script>
+    <script src="../Js/sobre.js"></script>
+  </body>
+</html>

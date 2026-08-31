@@ -1,0 +1,164 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap");
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  color: #292929;
+  background: linear-gradient(135deg, #ece7dc, #ffffff);
+  font-family: "Montserrat", sans-serif;
+}
+
+main {
+  position: relative;
+  display: flex;
+  min-height: 100vh;
+  margin-left: 0;
+  padding: 28px;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-card {
+  width: min(480px, 100%);
+  padding: 30px 36px;
+  background: #181818;
+  border: 1px solid #3a3a3a;
+  border-radius: 16px;
+  box-shadow: 0 24px 65px #00000035;
+}
+
+.login-card-com-logo {
+  display: grid;
+  width: min(900px, 100%);
+  grid-template-columns: 400px 1fr;
+  align-items: center;
+  gap: 36px;
+}
+
+.conteudo-login {
+  min-width: 0;
+}
+
+#logo-login {
+  display: block;
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+}
+
+#titulo-login,
+#titulo-cadastro {
+  margin-bottom: 20px;
+  color: #ffffff;
+  text-align: center;
+  font-size: 1.8rem;
+}
+
+#formLogin,
+#formCadastro {
+  display: grid;
+  gap: 8px;
+}
+
+#formLogin label,
+#formCadastro label {
+  margin-top: 4px;
+  color: #dddddd;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+#formLogin input,
+#formCadastro input {
+  width: 100%;
+  height: 43px;
+  padding: 0 13px;
+  color: #292929;
+  background: #ffffff;
+  border: 1px solid #c9c3b8;
+  border-radius: 7px;
+  outline: none;
+  font: inherit;
+}
+
+#formLogin input:focus,
+#formCadastro input:focus {
+  border-color: #c9c3b8;
+  box-shadow: none;
+}
+
+#botao-login,
+#botao-cadastro {
+  min-height: 44px;
+  margin-top: 12px;
+  color: black;
+  background: white;
+  border: 0;
+  border-radius: 7px;
+  cursor: pointer;
+  font:
+    700 0.92rem "Montserrat",
+    sans-serif;
+  transition: 0.2s;
+}
+
+#botao-login:hover,
+#botao-cadastro:hover {
+  transform: translateY(2px);
+  background: #c0bfbf;
+}
+
+#botao-login:disabled,
+#botao-cadastro:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+#mensagemLogin,
+#mensagemCadastro {
+  min-height: 22px;
+  margin-top: 10px;
+  color: #dddddd;
+  text-align: center;
+  font-size: 0.84rem;
+}
+
+#cadastro-link,
+#login-link {
+  color: #dddddd;
+  text-align: center;
+  font-size: 0.84rem;
+}
+
+#cadastro-link a,
+#login-link a {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+@media (max-width: 900px) {
+  main {
+    flex-direction: column;
+    gap: 20px;
+    padding: 22px 16px;
+  }
+
+  #logo-login {
+    width: 170px;
+    margin: 0 auto;
+  }
+
+  .login-card {
+    padding: 25px 20px;
+  }
+
+  .login-card-com-logo {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+}

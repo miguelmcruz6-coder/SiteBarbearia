@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../Css/agendar.css" />
+    <link rel="stylesheet" href="../Css/header.css" />
+    <link rel="icon" type="image/png" href="../Image/Logo.png" />
+    <title>Barbearia</title>
+  </head>
+  <body>
+    <header>
+      <img
+        src="../Image/Logo.png"
+        alt="Logo da Barbearia Imperial"
+        id="imagemCentralHeader"
+      />
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="localizacao.html">Localização</a></li>
+        <li><a href="profissionais.html">Profissionais</a></li>
+        <li><a href="servicos.html">Serviços</a></li>
+        <li><a href="agendar.html" class="ativo">Agendar</a></li>
+        <li><a href="meus-agendamentos.html">Agendamentos</a></li>
+        <li><a href="sobre.html">Sobre a Barbearia</a></li>
+      </ul>
+    </header>
+    <main>
+      <div id="agendamento">
+        <img src="../Image/Logo.png" id="logo-Agendar" />
+
+        <div id="usuario-agendamento">
+          <span id="nome-usuario"></span>
+          <a href="meus-agendamentos.html">Meus agendamentos</a>
+          <button type="button" id="botao-sair">Sair</button>
+        </div>
+
+        <select id="servico">
+          <option value="">Escolha o serviço</option>
+        </select>
+
+        <select id="barbeiro">
+          <option value="">Escolha o profissional</option>
+        </select>
+
+        <input id="data" type="date" />
+
+        <select id="horario" disabled>
+          <option value="">Escolha o serviço, o profissional e a data</option>
+        </select>
+
+        <button id="confirmarAgendamento">Confirmar agendamento</button>
+
+        <p id="mensagem"></p>
+      </div>
+    </main>
+    <script type="module" src="../Js/proteger-pagina.js"></script>
+    <script type="module" src="../Js/agendar.js"></script>
+  </body>
+</html>
