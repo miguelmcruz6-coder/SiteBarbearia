@@ -1,0 +1,112 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  min-height: 100vh;
+  color: #292929;
+  background: linear-gradient(135deg, #ece7dc, #fff);
+  font-family: "Montserrat", sans-serif;
+}
+header {
+  position: fixed;
+  z-index: 10;
+  inset: 0 auto 0 0;
+  display: flex;
+  width: var(--sidebar);
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--paper);
+  border-right: 1px solid #c99a3d59;
+  box-shadow: 7px 0 28px #00000024;
+}
+#imagemCentralHeader {
+  width: 100%;
+  height: 190px;
+  object-fit: contain;
+  background: var(--ink);
+}
+header ul {
+  width: 100%;
+}
+header a {
+  display: block;
+  padding: 18px 24px;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid #00000014;
+  font-size: 0.88rem;
+  font-weight: 600;
+  transition: 0.2s;
+}
+main {
+  display: flex;
+  min-height: 100vh;
+  margin-left: var(--sidebar);
+  padding: 50px 24px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  text-align: center;
+}
+main > img {
+  width: min(260px, 70vw);
+  max-height: 220px;
+  object-fit: contain;
+  filter: drop-shadow(0 12px 20px #00000024);
+}
+h3 {
+  margin-top: 8px;
+  color: var(--ink);
+  font-size: clamp(1.7rem, 4vw, 2.5rem);
+}
+p {
+  max-width: 650px;
+  padding: 19px 26px;
+  background: var(--white);
+  border-radius: 6px;
+  box-shadow: 0 12px 35px #00000014;
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+main > a {
+  padding: 14px 25px;
+  color: var(--white);
+  text-decoration: none;
+  background: var(--ink);
+  border-radius: 6px;
+  font-weight: 600;
+  transition: 0.2s;
+}
+main > a:hover {
+  transform: translateY(-2px);
+  background: var(--gold);
+}
+@media (max-width: 700px) {
+  header {
+    position: static;
+    width: 100%;
+    height: auto;
+  }
+  #imagemCentralHeader {
+    height: 135px;
+  }
+  header ul {
+    display: flex;
+  }
+  header a {
+    padding: 14px 6px;
+    flex: 1;
+    text-align: center;
+    font-size: 0.72rem;
+  }
+  main {
+    min-height: calc(100vh - 180px);
+    margin-left: 0;
+    padding: 35px 16px;
+  }
+}

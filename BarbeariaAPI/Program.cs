@@ -128,8 +128,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+else
+{
+    app.UseHsts();
+}
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 
 app.UseCors("Frontend");
 
@@ -140,5 +145,6 @@ app.UseAuthorization();
 // Mapeia os Controllers
 app.MapControllers();
 app.MapGet("/health", () => Results.Ok(new { status = "ok" }));
+app.MapGet("/", () => Results.Redirect("/Html/login.html"));
 
 app.Run();
