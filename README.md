@@ -588,9 +588,10 @@ Algumas funcionalidades que podem ser adicionadas futuramente:
 * [ ] Dockerização da aplicação
 * [ ] Deploy automatizado
 
-## 👨‍💻 Autor
+## 👨‍💻 Autores
 
 **Miguel Miyaki da Cruz**
+**Vinicius Silva Lima**
 
 GitHub:
 
